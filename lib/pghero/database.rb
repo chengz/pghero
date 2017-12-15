@@ -75,7 +75,10 @@ module PgHero
           when Hash
             url[:connect_timeout] ||= 2
           end
-          establish_connection url if url
+          if url
+            establish_connection url
+            octopus_establish_connection url if defined?(Octopus) && Octopus.enabled?
+          end
         end
       end
     end
